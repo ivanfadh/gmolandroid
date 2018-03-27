@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:gravity="center"
+    android:background="@drawable/background"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context="com.example.gmol_android.MainActivity">
+
+    <LinearLayout
+        android:visibility="visible"
+        android:id="@+id/layout"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="120sp"
+        android:layout_height="120sp"
+        android:layout_gravity="center"
+        android:alpha=".85"
+        android:src="@drawable/icon"/>
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="35sp"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:text="G'Mol"
+        android:layout_gravity="center"
+        />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Ganti Meter Online Kediri"
+            android:textColor="@android:color/white"
+            android:textSize="13sp"
+            android:typeface="sans" />
+
+        <EditText
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:id="@+id/editTextUsername"
+            android:background="@drawable/rounded_edit_text"
+            android:hint="Username"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:inputType="text"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"/>
+
+        <EditText
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:id="@+id/editTextPassword"
+            android:background="@drawable/rounded_edit_text"
+            android:hint="Password"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:inputType="textPassword"/>
+
+        <Button
+            android:id="@+id/button_login"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:layout_gravity="center"
+            android:background="@drawable/rounded_button"
+            android:text="masuk"
+            android:textColor="@color/login_background" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:background="@color/black_overlay"
+        />
+
+</RelativeLayout>
