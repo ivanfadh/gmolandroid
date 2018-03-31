@@ -19,25 +19,21 @@ public interface APIClient {
     Call<APIResponse> loginApi (@Field("email") String email, @Field("password") String password);
 
     @FormUrlEncoded
-    @POST("api/costumer/get")
+    @POST("api/customer/get")
     Call<APIResponse> customerApi(@Field("gmol_token") String gmol_token, @Field("id_pelanggan") String id_pelanggan);
 
     @FormUrlEncoded
-    @POST("api/data_gangguan/add")
-    Call<APIResponse> pasangApi(
+    @POST("api/gangguan/add")
+    Call<APIResponse> addData(
             @Field("gmol_token") String gmol_token,
             @Field("id_pelanggan") String id_pelanggan,
-            @Field("nama_pelanggan") String nama_pelanggan,
-            @Field("lokasi") String lokasi,
-            @Field("penyebab_gangguan") String penyebab_gangguan,
+            @Field("no_meter") String no_meter,
             @Field("merk_meter") String merk_meter,
-            @Field("no_meter") String id_meter,
             @Field("tipe_meter") String tipe_meter,
             @Field("no_segel") String no_segel,
             @Field("inisial") String inisial,
             @Field("stand_meter") String stand_meter,
-            @Field("petugas") String petugas,
-            @Field("perbaikan_sementara") String perbaikan_sementara
-
-    );
+            @Field("id_petugas") String id_petugas,
+            @Field("penyebab_gangguan") String penyebab_gangguan,
+            @Field("perbaikan_sementara") String perbaikan_sementara);
 }

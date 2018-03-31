@@ -5,214 +5,278 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/login_background"
-    tools:context="com.example.gmol_android.EntryActivity">
+    tools:context="com.example.gmol_android.PelepasanActivity">
 
-    <LinearLayout
-        android:id="@+id/layPasOne"
+    <RelativeLayout
+        android:visibility="visible"
+        android:id="@+id/customer_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingTop="16dp"
-        android:paddingBottom="16dp" >
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/editTextID"
-            android:hint="ID Pelanggan"
-            android:inputType="text"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            android:layout_marginTop="50dp"/>
-
-        <!--EditText
-            android:id="@+id/editTextNama"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:focusable="false"
-            android:hint="Nama Pelanggan"
-            android:inputType="text"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white" />-->
-
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp">
 
         <TextView
-            android:id="@+id/viewNama"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:textColor="@color/white"
-            android:text="Nama Pelanggan" />
-
-        <TextView
-            android:id="@+id/viewLokasi"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:textColor="@color/white"
-            android:text="Lokasi" />
-
-        <TextView
-            android:id="@+id/viewTarif"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:textColor="@color/white"
-            android:text="Tarif" />
-
-        <TextView
-            android:id="@+id/viewGardu"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:textColor="@color/white"
-            android:text="Gardu" />
-
-        <!--<EditText-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:id="@+id/editTextLokasi"-->
-            <!--android:hint="Lokasi"-->
-            <!--android:focusable="false"-->
-            <!--android:textColor="@color/white"-->
-            <!--android:textColorHint="@color/white"-->
-            <!--android:inputType="text"/>-->
-
-        <!--<EditText-->
-            <!--android:id="@+id/editTextPenyebabGangguan"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:hint="Penyebab Gangguan"-->
-            <!--android:focusable="false"-->
-            <!--android:textColor="@color/white"-->
-            <!--android:textColorHint="@color/white"-->
-            <!--android:inputType="text" />-->
-
-        <Button
-            android:id="@+id/button_cari1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:text="cari"
-            android:textColor="@color/login_background"
-            android:backgroundTint="@color/login_button"/>
-
-        <Button
-            android:id="@+id/button_lanjut1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:text="Lanjut"
-            android:visibility="gone"
-            android:textColor="@color/login_background"
-            android:backgroundTint="@color/login_button"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/layPasTwo"
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="DATA KWH METER BARU"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:layout_marginTop="50dp"
-            android:textColor="@color/white"
-            android:layout_gravity="center"
-            />
-
-        <EditText
-            android:id="@+id/editTextMerkMeter"
+            android:id="@+id/topLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Merk Meter"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            android:inputType="text" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/editTextNoMeter"
-            android:hint="No. Meter"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            android:inputType="text"/>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/editTipeMeter"
-            android:hint="Tipe Meter"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            android:inputType="text"/>
+            android:text="Identitas Pelanggan"
+            android:background="@color/login_button"
+            android:textAlignment="center"
+            android:padding="5dp"
+            android:textSize="25sp"/>
 
         <LinearLayout
+            android:id="@+id/secondLayout"
+            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
+            android:orientation="horizontal"
+            android:layout_below="@id/topLayout">
             <EditText
-                android:layout_width="225sp"
+                android:layout_weight="4"
+                android:id="@+id/customer_id"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/editTextNoSegel"
-                android:hint="No. Segel"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white"
-                android:inputType="text"/>
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/editTextInisial"
-                android:hint="Inisial"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white"
-                android:inputType="text"/>
+                android:hint="Id_pelanggan"
+                android:textColor="@android:color/black"
+                android:background="@drawable/form_fill"
+                android:padding="10dp"/>
+            <Button
+                android:layout_marginLeft="10dp"
+                android:background="@color/login_button"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="30sp"
+                android:text="Cari"
+                android:id="@+id/search_customer"
+                />
 
         </LinearLayout>
 
-        <EditText
-            android:id="@+id/editTextStandMeter"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Stand Meter"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            android:inputType="text" />
+        <LinearLayout
 
-        <EditText
-            android:id="@+id/editTextPetugas"
+            android:layout_marginTop="15dp"
+            android:padding="11dp"
+            android:id="@+id/thirdLayout"
+            android:background="@color/white"
+            android:layout_below="@id/secondLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Petugas"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            android:inputType="text" />
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/editTextPerbaikan"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Perbaikan Sementara"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            android:inputType="text" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_weight="2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="Nama Pelanggan"/>
+                <TextView
+                    android:layout_marginLeft="35dp"
+                    android:id="@+id/customer_name"
+                    android:layout_weight="3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="Abyan Dafa"/>
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_weight="2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="Lokasi"/>
+                <TextView
+                    android:layout_marginLeft="35dp"
+                    android:id="@+id/customer_location"
+                    android:layout_weight="3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="Abyan Dafa"/>
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_weight="2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="Tarif / Daya"/>
+                <TextView
+                    android:layout_marginLeft="35dp"
+                    android:id="@+id/customer_power_source"
+                    android:layout_weight="3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="Abyan Dafa"/>
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_weight="2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="Gardu"/>
+                <TextView
+                    android:layout_marginLeft="35dp"
+                    android:id="@+id/customer_gardu"
+                    android:layout_weight="3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="Abyan Dafa"/>
+            </LinearLayout>
+
+        </LinearLayout>
 
         <Button
-            android:id="@+id/button_simpan1"
-            android:layout_width="wrap_content"
+            android:visibility="gone"
+            android:id="@+id/next_input"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:text="simpan"
-            android:textColor="@color/login_background"
-            android:backgroundTint="@color/login_button"/>
+            android:layout_below="@id/thirdLayout"
+            android:text="Lanjut"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/form"/>
 
-    </LinearLayout>
+
+
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/scrollPelepasan"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
+
+        <RelativeLayout
+            android:id="@+id/data_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/titleData"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/login_button"
+                android:padding="5dp"
+                android:text="Data Gangguan"
+                android:textAlignment="center"
+                android:textSize="25sp" />
+
+            <EditText
+
+                android:id="@+id/kwh_meter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/titleData"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/form_fill"
+                android:hint="Nomor meter KWH"
+                android:padding="5dp"
+                android:textColor="@android:color/black" />
+
+            <EditText
+                android:id="@+id/kwh_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/kwh_meter"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/form_fill"
+                android:hint="Merk meter KWH"
+                android:padding="5dp"
+                android:textColor="@android:color/black" />
+
+            <EditText
+                android:id="@+id/kwh_merk"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/kwh_type"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/form_fill"
+                android:hint="Tipe meter KWH"
+                android:padding="5dp"
+                android:textColor="@android:color/black" />
+
+            <EditText
+                android:id="@+id/kwh_no_segel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/kwh_merk"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/form_fill"
+                android:hint="Nomor segel KWH"
+                android:padding="5dp"
+                android:textColor="@android:color/black" />
+
+            <EditText
+                android:id="@+id/kwh_inisial"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/kwh_no_segel"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/form_fill"
+                android:hint="Inisial KWH"
+                android:padding="5dp"
+                android:textColor="@android:color/black" />
+
+            <EditText
+                android:id="@+id/kwh_stand_meter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/kwh_inisial"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/form_fill"
+                android:hint="Stand meter KWH"
+                android:padding="5dp"
+                android:textColor="@android:color/black" />
+
+            <EditText
+                android:id="@+id/data_penyebab"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/kwh_stand_meter"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/form_fill"
+                android:hint="Penyebab Gangguan"
+                android:padding="10dp"
+                android:textColor="@android:color/black" />
+
+            <EditText
+                android:id="@+id/data_perbaikan_sementara"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/data_penyebab"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/form_fill"
+                android:hint="Perbaikan Sementara"
+                android:padding="10dp"
+                android:textColor="@android:color/black" />
+
+            <Button
+                android:id="@+id/send_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/data_perbaikan_sementara"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/form"
+                android:text="Kirim data"
+                android:visibility="visible" />
+
+        </RelativeLayout>
+
+
+    </ScrollView>
 
 </RelativeLayout>

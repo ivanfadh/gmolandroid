@@ -3,7 +3,6 @@ package com.example.gmol_android;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -41,7 +40,7 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //halaman input data kesehatan
-                Intent intent = new Intent(MenuActivity.this, PasangActivity.class);
+                Intent intent = new Intent(MenuActivity.this, PelepasanActivity.class);
                 startActivity(intent);
             }
         });

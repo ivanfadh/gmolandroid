@@ -141,7 +141,6 @@ public class EntryActivity extends AppCompatActivity implements OnMapReadyCallba
             public void onClick(View view) {
                 cariId();
 
-
             }
 
             private void cariId(){
@@ -158,7 +157,7 @@ public class EntryActivity extends AppCompatActivity implements OnMapReadyCallba
 
                             nama_pelanggan.setText(customer.getNama_pelanggan());
                             lokasi.setText(customer.getLokasi());
-                            tarif.setText(customer.getTarif());
+                            tarif.setText(customer.getTarifdaya());
                             gardu.setText(customer.getLokasi());
 
                             buttonCari.setVisibility(View.GONE);

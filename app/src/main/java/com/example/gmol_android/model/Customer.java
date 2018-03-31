@@ -6,19 +6,26 @@ package com.example.gmol_android.model;
 
 public class Customer {
     private int id, id_rayon;
-    private String id_pelanggan, nama_pelanggan, lokasi, tarif, gardu, latitude, longtitude, created_at, updated_at;
+    private String id_pelanggan,
+            nama_pelanggan,
+            lokasi,
+            tarifdaya,
+            gardu,
+            latitude,
+            longtitude,
+            created_at,
+            updated_at;
 
-    public Customer(int id, String id_pelanggan, String nama_pelanggan, String lokasi, String tarif, String gardu, String latitude, String longtitude, int id_rayon, String created_at, String updated_at) {
-
+    public Customer(int id, int id_rayon, String id_pelanggan, String nama_pelanggan, String lokasi, String tarifdaya, String gardu, String latitude, String longtitude, String created_at, String updated_at) {
         this.id = id;
+        this.id_rayon = id_rayon;
         this.id_pelanggan = id_pelanggan;
         this.nama_pelanggan = nama_pelanggan;
         this.lokasi = lokasi;
-        this.tarif = tarif;
+        this.tarifdaya = tarifdaya;
         this.gardu = gardu;
         this.latitude = latitude;
         this.longtitude = longtitude;
-        this.id_rayon = id_rayon;
         this.created_at = created_at;
         this.updated_at = updated_at;
     }
@@ -63,12 +70,12 @@ public class Customer {
         this.lokasi = lokasi;
     }
 
-    public String getTarif() {
-        return tarif;
+    public String getTarifdaya() {
+        return tarifdaya;
     }
 
-    public void setTarif(String tarif) {
-        this.tarif = tarif;
+    public void setTarifdaya(String tarifdaya) {
+        this.tarifdaya = tarifdaya;
     }
 
     public String getGardu() {
@@ -111,3 +118,4 @@ public class Customer {
         this.updated_at = updated_at;
     }
 }
+
