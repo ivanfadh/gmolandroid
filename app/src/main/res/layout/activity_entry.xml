@@ -35,7 +35,7 @@
             android:textColorHint="@color/white"
             android:inputType="text"/>
 
-        <EditText
+       <!-- <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/editTextNama"
@@ -50,25 +50,14 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <!--<Button-->
-                <!--android:id="@+id/button_lokasi"-->
-                <!--android:layout_width="150dp"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_gravity="right"-->
-                <!--android:text="lokasi"-->
-                <!--android:textColor="@color/login_background"-->
-                <!--android:backgroundTint="@color/login_button"/>-->
-
         <EditText
-            android:layout_width="148sp"
+            android:layout_width="135dp"
             android:layout_height="wrap_content"
             android:id="@+id/editTextLokasi"
             android:hint="Lokasi"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
             android:inputType="text"/>
-
-
 
         <EditText
             android:layout_width="wrap_content"
@@ -97,7 +86,35 @@
             android:textColorHint="@color/white"
             android:inputType="text"/>
 
-        </LinearLayout>
+        </LinearLayout>-->
+
+        <TextView
+            android:id="@+id/viewNama"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:textColor="@color/white"
+            android:text="Nama Pelanggan" />
+
+        <TextView
+            android:id="@+id/viewLokasi"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:textColor="@color/white"
+            android:text="Lokasi" />
+
+        <TextView
+            android:id="@+id/viewTarif"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:textColor="@color/white"
+            android:text="Tarif" />
+
+        <TextView
+            android:id="@+id/viewGardu"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:textColor="@color/white"
+            android:text="Gardu" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -121,18 +138,29 @@
 
         </LinearLayout>
 
-    <EditText
-        android:id="@+id/editTextPenyebabGangguan"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Penyebab Gangguan"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        android:inputType="text" />
+    <!--<EditText-->
+        <!--android:id="@+id/editTextPenyebabGangguan"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:hint="Penyebab Gangguan"-->
+        <!--android:textColor="@color/white"-->
+        <!--android:textColorHint="@color/white"-->
+        <!--android:inputType="text" />-->
 
 
         <Button
+            android:id="@+id/button_cari"
+            android:visibility="visible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="cari"
+            android:textColor="@color/login_background"
+            android:backgroundTint="@color/login_button"/>
+
+        <Button
             android:id="@+id/button_lanjut"
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"

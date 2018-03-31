@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -29,6 +30,11 @@ import android.widget.Toast;
 
 
 import com.bumptech.glide.Glide;
+import com.example.gmol_android.model.APIResponse;
+import com.example.gmol_android.model.Customer;
+import com.example.gmol_android.model.SPreference;
+import com.example.gmol_android.service.APIClient;
+import com.example.gmol_android.service.BaseRestService;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
@@ -44,6 +50,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.gson.Gson;
 
 
 import java.io.File;
@@ -54,9 +61,15 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class EntryActivity extends AppCompatActivity implements OnMapReadyCallback, LocationListener {
 
-    Button buttonLanjut;
+    Button buttonLanjut, buttonCari, buttonSimpan;
+    EditText ID;
+    TextView nama_pelanggan, lokasi, tarif, gardu ;
+
     //camera;
     private ImageView resultImage;
     private boolean cameraPermission;
@@ -64,6 +77,7 @@ public class EntryActivity extends AppCompatActivity implements OnMapReadyCallba
     private static final int CAMERA_REQUEST_CODE = 200;
     private static final String CAPTURE_IMAGE_FILE_PROVIDER = "com.example.gmol_android.fileprovider";
     private String mCurrentPhotoPath;
+    private SPreference sPreference;
 
     //lokasi
     //private Button getLocation;
@@ -73,6 +87,8 @@ public class EntryActivity extends AppCompatActivity implements OnMapReadyCallba
     private int REQUEST_CHECK_SETTINGS = 21;
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private LinearLayout layone, laytwo;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +100,17 @@ public class EntryActivity extends AppCompatActivity implements OnMapReadyCallba
         cameraPermission = false;
         resultImage = findViewById(R.id.result_image);
 
+        ID = findViewById(R.id.editTextID);
+        nama_pelanggan = findViewById(R.id.viewNama);
+        lokasi = findViewById(R.id.viewLokasi);
+        tarif = findViewById(R.id.viewTarif);
+        gardu = findViewById(R.id.viewGardu);
+        sPreference = new SPreference(this);
+
+        sPreference.getSP_GmolToken();
         buttonLanjut = findViewById(R.id.button_lanjut);
+        buttonCari = findViewById(R.id.button_cari);
+        buttonSimpan = findViewById(R.id.button_simpan);
          layone = findViewById(R.id.layone);
          laytwo = findViewById(R.id.laytwo);
 
@@ -109,6 +135,64 @@ public class EntryActivity extends AppCompatActivity implements OnMapReadyCallba
                 laytwo.setVisibility(View.VISIBLE);
             }
         });
+
+        buttonCari.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cariId();
+
+
+            }
+
+            private void cariId(){
+                APIClient apiClient = new BaseRestService().initializeRetrofit().create(APIClient.class);
+
+                retrofit2.Call<APIResponse> result = apiClient.customerApi(sPreference.getSP_GmolToken(), ID.getText().toString());
+                result.enqueue(new Callback<APIResponse>() {
+                    @Override
+                    public void onResponse(retrofit2.Call<APIResponse> call, Response<APIResponse> response) {
+                        if(response.code()==200){
+
+                            Gson gson = new Gson();
+                            Customer customer = gson.fromJson(gson.toJson(response.body().getData()), Customer.class);
+
+                            nama_pelanggan.setText(customer.getNama_pelanggan());
+                            lokasi.setText(customer.getLokasi());
+                            tarif.setText(customer.getTarif());
+                            gardu.setText(customer.getLokasi());
+
+                            buttonCari.setVisibility(View.GONE);
+                            buttonLanjut.setVisibility(View.VISIBLE);
+
+                        } else {
+                            Log.d("ivan", "onResponse: aa" + response.body().getMessage());
+                            Toast.makeText(EntryActivity.this, "ID tidak ditemukan", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(retrofit2.Call<APIResponse> call, Throwable t) {
+                        t.getMessage();
+                        Toast.makeText(EntryActivity.this, "ID tidak ditemukan", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+
+        //TINGGAL INI
+        buttonSimpan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                layone.setVisibility(View.GONE);
+                laytwo.setVisibility(View.VISIBLE);
+
+            }
+
+
+        });
+
 
         //getLocation = findViewById(R.id.button_lokasi);
         latitudeText = findViewById(R.id.latitude);

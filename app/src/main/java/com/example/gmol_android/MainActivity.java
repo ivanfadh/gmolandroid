@@ -41,10 +41,10 @@ public class MainActivity extends AppCompatActivity {
 
         sPreference = new SPreference(this);
 
-        /*if (sPreference.getCek_Login()){
+        if (sPreference.getCek_Login()){
             Intent intent = new Intent(MainActivity.this, MenuActivity.class);
             startActivity(intent);
-        }*/
+        }
 
         button_login = findViewById(R.id.button_login);
         username = findViewById(R.id.editTextUsername);
@@ -88,11 +88,16 @@ public class MainActivity extends AppCompatActivity {
 
         layout.setVisibility(View.GONE);
         viewLoading.setVisibility(View.VISIBLE);
-
+        /*Log.d(" ", "cekLogin: abyan");
+        Log.d("as", "cekLogin: " +username.getText().toString() );
+        Log.d("as", "cekLogin: " +password.getText().toString() );*/
         Call<APIResponse> result = apiClient.loginApi(username.getText().toString(), password.getText().toString());
         result.enqueue(new Callback<APIResponse>() {
+
             @Override
             public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
+
+                //Log.d("lalala", "onResponse: " + response.code() + response.message());
                 if (response.code()==200){
 
                     Gson gson = new Gson();

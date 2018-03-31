@@ -27,37 +27,73 @@
             android:textColorHint="@color/white"
             android:layout_marginTop="50dp"/>
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        <!--EditText
             android:id="@+id/editTextNama"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="false"
             android:hint="Nama Pelanggan"
-            android:focusable="false"
+            android:inputType="text"
             android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            android:inputType="text"/>
+            android:textColorHint="@color/white" />-->
 
 
-        <EditText
+        <TextView
+            android:id="@+id/viewNama"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/editTextLokasi"
-            android:hint="Lokasi"
-            android:focusable="false"
+            android:layout_height="30dp"
             android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            android:inputType="text"/>
+            android:text="Nama Pelanggan" />
 
-        <EditText
-            android:id="@+id/editTextPenyebabGangguan"
+        <TextView
+            android:id="@+id/viewLokasi"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Penyebab Gangguan"
-            android:focusable="false"
+            android:layout_height="30dp"
             android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            android:inputType="text" />
+            android:text="Lokasi" />
 
+        <TextView
+            android:id="@+id/viewTarif"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:textColor="@color/white"
+            android:text="Tarif" />
+
+        <TextView
+            android:id="@+id/viewGardu"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:textColor="@color/white"
+            android:text="Gardu" />
+
+        <!--<EditText-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/editTextLokasi"-->
+            <!--android:hint="Lokasi"-->
+            <!--android:focusable="false"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:textColorHint="@color/white"-->
+            <!--android:inputType="text"/>-->
+
+        <!--<EditText-->
+            <!--android:id="@+id/editTextPenyebabGangguan"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:hint="Penyebab Gangguan"-->
+            <!--android:focusable="false"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:textColorHint="@color/white"-->
+            <!--android:inputType="text" />-->
+
+        <Button
+            android:id="@+id/button_cari1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="cari"
+            android:textColor="@color/login_background"
+            android:backgroundTint="@color/login_button"/>
 
         <Button
             android:id="@+id/button_lanjut1"
@@ -65,6 +101,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:text="Lanjut"
+            android:visibility="gone"
             android:textColor="@color/login_background"
             android:backgroundTint="@color/login_button"/>
 

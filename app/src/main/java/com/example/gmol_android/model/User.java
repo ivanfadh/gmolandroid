@@ -29,6 +29,8 @@ public class User {
         return id_petugas;
     }
 
+
+
     public void setId_petugas(String id_petugas) {
         this.id_petugas = id_petugas;
     }

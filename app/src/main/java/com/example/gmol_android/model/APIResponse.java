@@ -15,6 +15,7 @@ public class APIResponse {
         this.status_code = status_code;
     }
 
+
     public Object getData() {
         return data;
     }
