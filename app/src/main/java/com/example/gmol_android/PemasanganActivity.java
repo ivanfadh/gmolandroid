@@ -62,6 +62,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Callback;
 import retrofit2.Response;
 
@@ -72,10 +75,12 @@ public class PemasanganActivity extends AppCompatActivity implements OnMapReadyC
     private ScrollView viewData;
     private RelativeLayout layoutCustomer, layoutData;
     private EditText customerID;
-    private TextView customerName, customerLocation, customerDaya, customerGardu;
+    private TextView customerName, customerLocation, customerDaya, customerGardu, identitas, data;
     private EditText kwhNo, kwhMerk, kwhType, kwhSegel, kwhInisial, kwhStand, dataPenyebab, dataPerbaikanSementara;
     private Button searchCustomer, nextForm, sendForm;
-    private ImageView image;
+    private ImageView kwHfoto;
+
+    File image;
 
     private Customer customer;
     private ProgressDialog progressDialog;
@@ -99,15 +104,15 @@ public class PemasanganActivity extends AppCompatActivity implements OnMapReadyC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pelepasan);
+        setContentView(R.layout.activity_pemasangan);
         sPreference = new SPreference(this);
+
+        setID();
         requestPermission();
         cameraPermission = false;
         resultImage = findViewById(R.id.result_image);
 
         getCameraPermission();
-
-        setID();
 
         setListener();
 
@@ -228,10 +233,14 @@ public class PemasanganActivity extends AppCompatActivity implements OnMapReadyC
                         // Set the map's camera position to the current location of the device.
                         mLastKnownLocation = (Location) task.getResult();
                         if (mLastKnownLocation!=null)
+                        {
 
-                            // addressText.setText(getAddress(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude()));
-                            latitudeText.setText("Latitude : " + mLastKnownLocation.getLatitude());
-                        longitudeText.setText("Longitude : " + mLastKnownLocation.getLongitude());
+                            Log.d("Logbyan", "onComplete: " + mLastKnownLocation.toString());
+                            latitudeText.setText("" + mLastKnownLocation.getLatitude());
+                            longitudeText.setText("" + mLastKnownLocation.getLongitude());
+                        }
+
+                        // addressText.setText(getAddress(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude()));
 //
 //                            mapku.moveCamera(CameraUpdateFactory.newLatLngZoom(
 //                                    new LatLng(mLastKnownLocation.getLatitude(),
@@ -397,21 +406,31 @@ public class PemasanganActivity extends AppCompatActivity implements OnMapReadyC
     private void sendData() {
 
         if(kwhStand.getText().toString().isEmpty() || kwhInisial.getText().toString().isEmpty() || kwhSegel.getText().toString().isEmpty()
-                || kwhType.getText().toString().isEmpty() || kwhMerk.getText().toString().isEmpty() || kwhNo.getText().toString().isEmpty() ||
-                dataPenyebab.getText().toString().isEmpty() || dataPenyebab.getText().toString().isEmpty())
+                || kwhType.getText().toString().isEmpty() || kwhMerk.getText().toString().isEmpty() || kwhNo.getText().toString().isEmpty())
         {
             Toast.makeText(this, "harap isi semua form", Toast.LENGTH_SHORT).show();
             return;
         }
         progressDialog.show();
 
+        RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), result);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("file", result.getName(), reqFile);
+        RequestBody gmol_token = RequestBody.create(MediaType.parse("text/plain"), sPreference.getSP_GmolToken());
+        RequestBody id_pelanggan = RequestBody.create(MediaType.parse("text/plain"), customer.getId_pelanggan());
+        RequestBody no_meter = RequestBody.create(MediaType.parse("text/plain"), kwhNo.getText().toString());
+        RequestBody merk_meter = RequestBody.create(MediaType.parse("text/plain"), kwhMerk.getText().toString());
+        RequestBody tipe_meter = RequestBody.create(MediaType.parse("text/plain"), kwhType.getText().toString());
+        RequestBody no_segel = RequestBody.create(MediaType.parse("text/plain"), kwhSegel.getText().toString());
+        RequestBody inisial = RequestBody.create(MediaType.parse("text/plain"), kwhInisial.getText().toString());
+        RequestBody stand_meter = RequestBody.create(MediaType.parse("text/plain"), kwhStand.getText().toString());
+        RequestBody latitude = RequestBody.create(MediaType.parse("text/plain"), latitudeText.getText().toString());
+        RequestBody longitude = RequestBody.create(MediaType.parse("text/plain"), longitudeText.getText().toString());
+
 
         APIClient apiClient = new BaseRestService().initializeRetrofit().create(APIClient.class);
         Log.d("logbyan", "cariId: " + sPreference.getSP_GmolToken());
-        retrofit2.Call<APIResponse> result = apiClient.fixData(sPreference.getSP_GmolToken(), customer.getId_pelanggan(),
-                kwhNo.getText().toString(), kwhMerk.getText().toString(), kwhType.getText().toString(), kwhSegel.getText().toString(),
-                kwhInisial.getText().toString(), kwhStand.getText().toString(), sPreference.getSP_IDPetugas(), dataPenyebab.getText().toString(),
-                dataPerbaikanSementara.getText().toString());
+        retrofit2.Call<APIResponse> result = apiClient.fixData(body, gmol_token, id_pelanggan, no_meter, merk_meter, tipe_meter, no_segel,
+                inisial, stand_meter, latitude, longitude);
 
         result.enqueue(new Callback<APIResponse>() {
             @Override
@@ -448,7 +467,7 @@ public class PemasanganActivity extends AppCompatActivity implements OnMapReadyC
     private void setID() {
         viewData = findViewById(R.id.scrollPemasangan);
 
-        layoutCustomer = findViewById(R.id.customer_layout);
+        layoutCustomer = findViewById(R.id.custumer_layout_pasang);
         layoutData = findViewById(R.id.data_layout_pasang);
 
         customerID = findViewById(R.id.customer_id);
@@ -456,6 +475,8 @@ public class PemasanganActivity extends AppCompatActivity implements OnMapReadyC
         customerLocation = findViewById(R.id.customer_location);
         customerDaya = findViewById(R.id.customer_power_source);
         customerGardu = findViewById(R.id.customer_gardu);
+        identitas = findViewById(R.id.titleIdentitas);
+        data = findViewById(R.id.titleData);
 
         kwhNo = findViewById(R.id.kwh_meter);
         kwhMerk = findViewById(R.id.kwh_merk);
@@ -471,13 +492,12 @@ public class PemasanganActivity extends AppCompatActivity implements OnMapReadyC
 
         searchCustomer = findViewById(R.id.search_customer);
         nextForm = findViewById(R.id.next_input);
-        sendForm = findViewById(R.id.send_data);
+        sendForm = findViewById(R.id.send_data_pasang);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Loading");
         progressDialog.setMessage("Harap menunggu");
         progressDialog.setCancelable(false);
-
 
 
     }
@@ -507,7 +527,8 @@ public class PemasanganActivity extends AppCompatActivity implements OnMapReadyC
                 }
                 else if(response.code() == 201)
                 {
-                    sPreference.logout();
+                   // sPreference.logout();
+                    Toast.makeText(PemasanganActivity.this, "Pelanggan tidak ditemukan", Toast.LENGTH_SHORT).show();
                 }
                 else if(response.code() == 202)
                 {
@@ -538,6 +559,8 @@ public class PemasanganActivity extends AppCompatActivity implements OnMapReadyC
         {
             nextForm.setVisibility(View.GONE);
             layoutData.setVisibility(View.GONE);
+            identitas.setVisibility(View.GONE);
+            data.setVisibility(View.VISIBLE);
             layoutCustomer.setVisibility(View.VISIBLE);
         }
     }

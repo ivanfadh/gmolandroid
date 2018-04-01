@@ -7,36 +7,58 @@
     android:background="@color/login_background"
     tools:context="com.example.gmol_android.PemasanganActivity">
 
+    <TextView
+        android:id="@+id/titleIdentitas"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Identitas Pelanggan"
+        android:background="@color/login_button"
+        android:textAlignment="center"
+        android:layout_margin="30dp"
+        android:padding="5dp"
+        android:textSize="25sp"/>
+
+    <TextView
+        android:id="@+id/titleData"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Data Pelanggan"
+        android:background="@color/login_button"
+        android:textAlignment="center"
+        android:layout_margin="30dp"
+        android:padding="5dp"
+        android:textSize="25sp"/>
+
     <ImageView
         android:layout_centerHorizontal="true"
         android:id="@+id/result_image"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="90dp"
         android:layout_gravity="center"/>
 
     <RelativeLayout
-        android:id="@+id/costumer_layout_pasang"
+        android:id="@+id/custumer_layout_pasang"
         android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
         android:layout_below="@+id/result_image">
 
-        <TextView
-            android:id="@+id/topLayout_pasang"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Identitas Pelanggan"
-            android:background="@color/login_button"
-            android:textAlignment="center"
-            android:padding="5dp"
-            android:textSize="25sp"/>
+        <!--<TextView-->
+            <!--android:id="@+id/topLayout_pasang"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Identitas Pelanggan"-->
+            <!--android:background="@color/login_button"-->
+            <!--android:textAlignment="center"-->
+            <!--android:padding="5dp"-->
+            <!--android:textSize="25sp"/>-->
 
 
         <LinearLayout
-            android:layout_marginTop="10dp"
-            android:layout_below="@+id/topLayout_pasang"
             android:id="@+id/secondLayout_pasang"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -240,7 +262,6 @@
                 android:backgroundTint="@color/login_button"/>-->
 
     </RelativeLayout>
-
     <ScrollView
         android:id="@+id/scrollPemasangan"
         android:visibility="gone"
@@ -255,22 +276,10 @@
             android:layout_margin="30dp"
             android:visibility="gone">
 
-            <TextView
-                android:id="@+id/titleData"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/login_button"
-                android:padding="5dp"
-                android:text="Data Gangguan"
-                android:textAlignment="center"
-                android:textSize="25sp" />
-
             <EditText
                 android:id="@+id/kwh_meter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/titleData"
-                android:layout_marginTop="50dp"
                 android:background="@drawable/form_fill"
                 android:hint="Nomor meter KWH"
                 android:padding="5dp"
@@ -331,33 +340,11 @@
                 android:padding="5dp"
                 android:textColor="@android:color/black" />
 
-            <EditText
-                android:id="@+id/data_penyebab"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/kwh_stand_meter"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/form_fill"
-                android:hint="Penyebab Gangguan"
-                android:padding="10dp"
-                android:textColor="@android:color/black" />
-
-            <EditText
-                android:id="@+id/data_perbaikan_sementara"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/data_penyebab"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/form_fill"
-                android:hint="Perbaikan Sementara"
-                android:padding="10dp"
-                android:textColor="@android:color/black" />
-
             <Button
                 android:id="@+id/send_data_pasang"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/data_perbaikan_sementara"
+                android:layout_below="@id/kwh_inisial"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/form"
                 android:text="Kirim data"

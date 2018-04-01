@@ -10,6 +10,10 @@
     android:layout_height="match_parent"
     tools:context="com.example.gmol_android.MainActivity">
 
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
     <LinearLayout
         android:visibility="visible"
         android:id="@+id/layout"
@@ -82,6 +86,8 @@
             android:text="masuk"
             android:textColor="@color/login_background" />
     </LinearLayout>
+
+    </ScrollView>
 
     <View
         android:id="@+id/loading"
