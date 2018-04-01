@@ -31,7 +31,7 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //halaman input data kesehatan
-                Intent intent = new Intent(MenuActivity.this, EntryActivity.class);
+                Intent intent = new Intent(MenuActivity.this, PemasanganActivity.class);
                 startActivity(intent);
             }
         });

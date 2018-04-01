@@ -40,7 +40,7 @@ public class PelepasanActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pasang);
+        setContentView(R.layout.activity_pelepasan);
         sPreference = new SPreference(this);
 
         setID();

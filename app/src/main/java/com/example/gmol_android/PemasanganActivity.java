@@ -1,6 +1,7 @@
 package com.example.gmol_android;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
@@ -25,6 +26,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,10 +47,8 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.gson.Gson;
@@ -64,11 +65,20 @@ import java.util.Locale;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class EntryActivity extends AppCompatActivity implements OnMapReadyCallback, LocationListener {
+public class PemasanganActivity extends AppCompatActivity implements OnMapReadyCallback, LocationListener {
 
-    Button buttonLanjut, buttonCari, buttonSimpan;
-    EditText ID;
-    TextView nama_pelanggan, lokasi, tarif, gardu ;
+    private SPreference sPreference;
+
+    private ScrollView viewData;
+    private RelativeLayout layoutCustomer, layoutData;
+    private EditText customerID;
+    private TextView customerName, customerLocation, customerDaya, customerGardu;
+    private EditText kwhNo, kwhMerk, kwhType, kwhSegel, kwhInisial, kwhStand, dataPenyebab, dataPerbaikanSementara;
+    private Button searchCustomer, nextForm, sendForm;
+    private ImageView image;
+
+    private Customer customer;
+    private ProgressDialog progressDialog;
 
     //camera;
     private ImageView resultImage;
@@ -77,7 +87,6 @@ public class EntryActivity extends AppCompatActivity implements OnMapReadyCallba
     private static final int CAMERA_REQUEST_CODE = 200;
     private static final String CAPTURE_IMAGE_FILE_PROVIDER = "com.example.gmol_android.fileprovider";
     private String mCurrentPhotoPath;
-    private SPreference sPreference;
 
     //lokasi
     //private Button getLocation;
@@ -86,131 +95,30 @@ public class EntryActivity extends AppCompatActivity implements OnMapReadyCallba
     private Location mLastKnownLocation;
     private int REQUEST_CHECK_SETTINGS = 21;
     private FusedLocationProviderClient mFusedLocationProviderClient;
-    private LinearLayout layone, laytwo;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_entry);
-
-        //camera
+        setContentView(R.layout.activity_pelepasan);
+        sPreference = new SPreference(this);
         requestPermission();
         cameraPermission = false;
         resultImage = findViewById(R.id.result_image);
 
-        ID = findViewById(R.id.editTextID);
-        nama_pelanggan = findViewById(R.id.viewNama);
-        lokasi = findViewById(R.id.viewLokasi);
-        tarif = findViewById(R.id.viewTarif);
-        gardu = findViewById(R.id.viewGardu);
-        sPreference = new SPreference(this);
+        getCameraPermission();
 
-        sPreference.getSP_GmolToken();
-        buttonLanjut = findViewById(R.id.button_lanjut);
-        buttonCari = findViewById(R.id.button_cari);
-        buttonSimpan = findViewById(R.id.button_simpan);
-         layone = findViewById(R.id.layone);
-         laytwo = findViewById(R.id.laytwo);
+        setID();
 
-         getCameraPermission();
-       /* getPhoto = findViewById(R.id.button_lokasi);
+        setListener();
 
-        getPhoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(EntryActivity.this, CameraActivity.class));
-            }
-        });*/
-
-        buttonLanjut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //halaman input data kesehatan
-                /*Intent intent = new Intent(EntryActivity.this, Entry2Acvitity.class);
-                startActivity(intent);*/
-
-                layone.setVisibility(View.GONE);
-                laytwo.setVisibility(View.VISIBLE);
-            }
-        });
-
-        buttonCari.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                cariId();
-
-            }
-
-            private void cariId(){
-                APIClient apiClient = new BaseRestService().initializeRetrofit().create(APIClient.class);
-
-                retrofit2.Call<APIResponse> result = apiClient.customerApi(sPreference.getSP_GmolToken(), ID.getText().toString());
-                result.enqueue(new Callback<APIResponse>() {
-                    @Override
-                    public void onResponse(retrofit2.Call<APIResponse> call, Response<APIResponse> response) {
-                        if(response.code()==200){
-
-                            Gson gson = new Gson();
-                            Customer customer = gson.fromJson(gson.toJson(response.body().getData()), Customer.class);
-
-                            nama_pelanggan.setText(customer.getNama_pelanggan());
-                            lokasi.setText(customer.getLokasi());
-                            tarif.setText(customer.getTarifdaya());
-                            gardu.setText(customer.getLokasi());
-
-                            buttonCari.setVisibility(View.GONE);
-                            buttonLanjut.setVisibility(View.VISIBLE);
-
-                        } else {
-                            Log.d("ivan", "onResponse: aa" + response.body().getMessage());
-                            Toast.makeText(EntryActivity.this, "ID tidak ditemukan", Toast.LENGTH_SHORT).show();
-                        }
-
-                    }
-
-                    @Override
-                    public void onFailure(retrofit2.Call<APIResponse> call, Throwable t) {
-                        t.getMessage();
-                        Toast.makeText(EntryActivity.this, "ID tidak ditemukan", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        });
-
-        //TINGGAL INI
-        buttonSimpan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                layone.setVisibility(View.GONE);
-                laytwo.setVisibility(View.VISIBLE);
-
-            }
-
-
-        });
-
-
-        //getLocation = findViewById(R.id.button_lokasi);
-        latitudeText = findViewById(R.id.latitude);
-        longitudeText = findViewById(R.id.longitude);
-        //addressText = findViewById(R.id.address_value);
-
-        /*getLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                requestPermission();
-            }
-        });*/
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
     }
 
     private void getCameraPermission() {
         if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
                 Manifest.permission.CAMERA)
-                == PackageManager.PERMISSION_GRANTED ) {
+                == PackageManager.PERMISSION_GRANTED) {
             cameraPermission = true;
             getPhoto();
 
@@ -225,10 +133,10 @@ public class EntryActivity extends AppCompatActivity implements OnMapReadyCallba
 
     public void getPhoto()
     {
-        File path = new File(EntryActivity.this.getFilesDir(), "hasilupload");
+        File path = new File(PemasanganActivity.this.getFilesDir(), "hasilupload");
         if (!path.exists()) path.mkdirs();
         result = new File(path, Calendar.getInstance().getTimeInMillis() + ".jpg");
-        Uri imageUri = FileProvider.getUriForFile(EntryActivity.this, CAPTURE_IMAGE_FILE_PROVIDER, result);
+        Uri imageUri = FileProvider.getUriForFile(PemasanganActivity.this, CAPTURE_IMAGE_FILE_PROVIDER, result);
 
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
@@ -296,7 +204,7 @@ public class EntryActivity extends AppCompatActivity implements OnMapReadyCallba
                         try {
                             // Show the dialog by calling startResolutionForResult(), and check the result
                             // in onActivityResult().
-                            status.startResolutionForResult(EntryActivity.this, REQUEST_CHECK_SETTINGS);
+                            status.startResolutionForResult(PemasanganActivity.this, REQUEST_CHECK_SETTINGS);
                         } catch (IntentSender.SendIntentException e) {
                             Log.i("requestlocation", "PendingIntent unable to execute request.");
                         }
@@ -308,8 +216,6 @@ public class EntryActivity extends AppCompatActivity implements OnMapReadyCallba
             }
         });
     }
-
-
 
     private void getDeviceLocation() {
 
@@ -323,8 +229,8 @@ public class EntryActivity extends AppCompatActivity implements OnMapReadyCallba
                         mLastKnownLocation = (Location) task.getResult();
                         if (mLastKnownLocation!=null)
 
-                           // addressText.setText(getAddress(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude()));
-                        latitudeText.setText("Latitude : " + mLastKnownLocation.getLatitude());
+                            // addressText.setText(getAddress(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude()));
+                            latitudeText.setText("Latitude : " + mLastKnownLocation.getLatitude());
                         longitudeText.setText("Longitude : " + mLastKnownLocation.getLongitude());
 //
 //                            mapku.moveCamera(CameraUpdateFactory.newLatLngZoom(
@@ -409,6 +315,38 @@ public class EntryActivity extends AppCompatActivity implements OnMapReadyCallba
 
     }
 
+    private void addPhoto() {
+        Glide.with(this).load(result).into(resultImage);
+    }
+
+    private void setListener() {
+
+        searchCustomer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(customerID.getText().toString().isEmpty())
+                    Toast.makeText(PemasanganActivity.this, "Mohon isi ID pelanggan terlebih dahulu", Toast.LENGTH_SHORT).show();
+                else cariId();
+            }
+        });
+
+        nextForm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewData.setVisibility(View.VISIBLE);
+                layoutCustomer.setVisibility(View.GONE);
+                layoutData.setVisibility(View.VISIBLE);
+            }
+        });
+        sendForm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendData();
+            }
+        });
+
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -440,15 +378,6 @@ public class EntryActivity extends AppCompatActivity implements OnMapReadyCallba
 
     }
 
-    private void addPhoto() {
-
-        Glide.with(this).load(result).into(resultImage);
-
-
-    }
-
-
-
     private File createImageFile() throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -465,19 +394,152 @@ public class EntryActivity extends AppCompatActivity implements OnMapReadyCallba
         return image;
     }
 
+    private void sendData() {
 
-    @Override
-    public void onBackPressed()
-    {
-        if (layone.getVisibility() == View.VISIBLE)
+        if(kwhStand.getText().toString().isEmpty() || kwhInisial.getText().toString().isEmpty() || kwhSegel.getText().toString().isEmpty()
+                || kwhType.getText().toString().isEmpty() || kwhMerk.getText().toString().isEmpty() || kwhNo.getText().toString().isEmpty() ||
+                dataPenyebab.getText().toString().isEmpty() || dataPenyebab.getText().toString().isEmpty())
         {
-            super.onBackPressed();
-        } else {
-            layone.setVisibility(View.VISIBLE);
-            laytwo.setVisibility(View.GONE);
+            Toast.makeText(this, "harap isi semua form", Toast.LENGTH_SHORT).show();
+            return;
         }
-        //super.onBackPressed();
+        progressDialog.show();
+
+
+        APIClient apiClient = new BaseRestService().initializeRetrofit().create(APIClient.class);
+        Log.d("logbyan", "cariId: " + sPreference.getSP_GmolToken());
+        retrofit2.Call<APIResponse> result = apiClient.fixData(sPreference.getSP_GmolToken(), customer.getId_pelanggan(),
+                kwhNo.getText().toString(), kwhMerk.getText().toString(), kwhType.getText().toString(), kwhSegel.getText().toString(),
+                kwhInisial.getText().toString(), kwhStand.getText().toString(), sPreference.getSP_IDPetugas(), dataPenyebab.getText().toString(),
+                dataPerbaikanSementara.getText().toString());
+
+        result.enqueue(new Callback<APIResponse>() {
+            @Override
+            public void onResponse(retrofit2.Call<APIResponse> call, Response<APIResponse> response) {
+                Log.d("logbyan", "onResponse: " + response.message());
+                Log.d("logbyan", "onResponse: " + response.code());
+                if(response.code() == 200)
+                {
+                    Toast.makeText(PemasanganActivity.this, "Berhasil menambahkan data gangguan", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+                else if(response.code() == 201)
+                {
+                    Toast.makeText(PemasanganActivity.this, "Akun anda tersambung di perangkat lain", Toast.LENGTH_SHORT).show();
+                    sPreference.logout();
+                }
+                progressDialog.dismiss();
+
+
+            }
+
+            @Override
+            public void onFailure(retrofit2.Call<APIResponse> call, Throwable t) {
+                Toast.makeText(PemasanganActivity.this, "Terjadi kesalahan terhadap jaringan anda", Toast.LENGTH_SHORT).show();
+                Log.d("logbyan", "onFailure: " + t.getMessage());
+                progressDialog.dismiss();
+
+
+            }
+        });
+
+    }
+
+    private void setID() {
+        viewData = findViewById(R.id.scrollPemasangan);
+
+        layoutCustomer = findViewById(R.id.customer_layout);
+        layoutData = findViewById(R.id.data_layout_pasang);
+
+        customerID = findViewById(R.id.customer_id);
+        customerName = findViewById(R.id.customer_name);
+        customerLocation = findViewById(R.id.customer_location);
+        customerDaya = findViewById(R.id.customer_power_source);
+        customerGardu = findViewById(R.id.customer_gardu);
+
+        kwhNo = findViewById(R.id.kwh_meter);
+        kwhMerk = findViewById(R.id.kwh_merk);
+        kwhType = findViewById(R.id.kwh_type);
+        kwhSegel = findViewById(R.id.kwh_no_segel);
+        kwhInisial = findViewById(R.id.kwh_inisial);
+        kwhStand = findViewById(R.id.kwh_stand_meter);
+        latitudeText = findViewById(R.id.latitude);
+        longitudeText = findViewById(R.id.longitude);
+
+        dataPenyebab = findViewById(R.id.data_penyebab);
+        dataPerbaikanSementara = findViewById(R.id.data_perbaikan_sementara);
+
+        searchCustomer = findViewById(R.id.search_customer);
+        nextForm = findViewById(R.id.next_input);
+        sendForm = findViewById(R.id.send_data);
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Loading");
+        progressDialog.setMessage("Harap menunggu");
+        progressDialog.setCancelable(false);
+
 
 
     }
+
+    private void cariId(){
+        progressDialog.show();
+        APIClient apiClient = new BaseRestService().initializeRetrofit().create(APIClient.class);
+        Log.d("logbyan", "cariId: " + sPreference.getSP_GmolToken());
+        retrofit2.Call<APIResponse> result = apiClient.customerApi(sPreference.getSP_GmolToken(), customerID.getText().toString());
+        result.enqueue(new Callback<APIResponse>() {
+            @Override
+            public void onResponse(retrofit2.Call<APIResponse> call, Response<APIResponse> response) {
+
+                Log.d("logbyan", "onResponse: " + response.message());
+                Log.d("logbyan", "onResponse: " + response.code());
+
+                if(response.code()==200){
+
+                    Gson gson = new Gson();
+                    customer = gson.fromJson(gson.toJson(response.body().getData()), Customer.class);
+
+                    customerName.setText(customer.getNama_pelanggan());
+                    customerLocation.setText(customer.getLokasi());
+                    customerDaya.setText(customer.getTarifdaya());
+                    customerGardu.setText(customer.getGardu());
+                    nextForm.setVisibility(View.VISIBLE);
+                }
+                else if(response.code() == 201)
+                {
+                    sPreference.logout();
+                }
+                else if(response.code() == 202)
+                {
+                    Toast.makeText(PemasanganActivity.this, "Pelanggan tidak ditemukan", Toast.LENGTH_SHORT).show();
+                }
+                progressDialog.dismiss();
+
+            }
+
+            @Override
+            public void onFailure(retrofit2.Call<APIResponse> call, Throwable t) {
+                Log.d("logbyan", "onResponse: " + t.getMessage());
+                Toast.makeText(PemasanganActivity.this, "Jaringan anda bermasalah", Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if(layoutCustomer.getVisibility() == View.VISIBLE)
+        {
+            super.onBackPressed();
+        }
+        else
+        {
+            nextForm.setVisibility(View.GONE);
+            layoutData.setVisibility(View.GONE);
+            layoutCustomer.setVisibility(View.VISIBLE);
+        }
+    }
+
 }

@@ -49,7 +49,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".MenuActivity" />
-        <activity android:name=".EntryActivity" />
+        <activity android:name=".PemasanganActivity" />
         <activity android:name=".PelepasanActivity" />
         <activity android:name=".CameraActivity"></activity>
     </application>

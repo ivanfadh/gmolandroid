@@ -36,7 +36,7 @@
                 android:id="@+id/customer_id"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="Id_pelanggan"
+                android:hint="Id Pelanggan"
                 android:textColor="@android:color/black"
                 android:background="@drawable/form_fill"
                 android:padding="10dp"/>
@@ -79,7 +79,7 @@
                     android:layout_weight="3"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:text="Abyan Dafa"/>
+                    android:text="-"/>
             </LinearLayout>
             <LinearLayout
                 android:orientation="horizontal"
@@ -96,7 +96,7 @@
                     android:layout_weight="3"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:text="Abyan Dafa"/>
+                    android:text="-"/>
             </LinearLayout>
             <LinearLayout
                 android:orientation="horizontal"
@@ -113,7 +113,7 @@
                     android:layout_weight="3"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:text="Abyan Dafa"/>
+                    android:text="-"/>
             </LinearLayout>
             <LinearLayout
                 android:orientation="horizontal"
@@ -130,7 +130,7 @@
                     android:layout_weight="3"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:text="Abyan Dafa"/>
+                    android:text="-"/>
             </LinearLayout>
 
         </LinearLayout>
