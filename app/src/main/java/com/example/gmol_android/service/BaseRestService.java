@@ -12,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class BaseRestService {
     public static Retrofit retrofit;
-    public static final String URL = "http://192.168.43.98/gmol/public/";
+    public static final String URL = "http://140.82.42.144/gmol/public/";
 
     final static OkHttpClient okHttpClient = new OkHttpClient.Builder()
             .readTimeout(20, TimeUnit.SECONDS)
