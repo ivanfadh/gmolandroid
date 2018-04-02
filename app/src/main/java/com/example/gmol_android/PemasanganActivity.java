@@ -527,8 +527,7 @@ public class PemasanganActivity extends AppCompatActivity implements OnMapReadyC
                 }
                 else if(response.code() == 201)
                 {
-                   // sPreference.logout();
-                    Toast.makeText(PemasanganActivity.this, "Pelanggan tidak ditemukan", Toast.LENGTH_SHORT).show();
+                   sPreference.logout();
                 }
                 else if(response.code() == 202)
                 {
