@@ -344,7 +344,7 @@
                 android:id="@+id/send_data_pasang"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/kwh_inisial"
+                android:layout_below="@id/kwh_stand_meter"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/form"
                 android:text="Kirim data"

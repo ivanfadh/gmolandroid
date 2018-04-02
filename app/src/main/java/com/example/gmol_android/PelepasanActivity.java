@@ -47,8 +47,6 @@ public class PelepasanActivity extends AppCompatActivity {
 
         setListener();
 
-
-
     }
 
     private void setListener() {
@@ -176,10 +174,8 @@ public class PelepasanActivity extends AppCompatActivity {
                 Log.d("logbyan", "onResponse: " + response.code());
 
                 if(response.code()==200){
-
                     Gson gson = new Gson();
                     customer = gson.fromJson(gson.toJson(response.body().getData()), Customer.class);
-
                     customerName.setText(customer.getNama_pelanggan());
                     customerLocation.setText(customer.getLokasi());
                     customerDaya.setText(customer.getTarifdaya());
@@ -218,6 +214,7 @@ public class PelepasanActivity extends AppCompatActivity {
         }
         else
         {
+            viewData.setVisibility(View.GONE);
             nextForm.setVisibility(View.GONE);
             layoutData.setVisibility(View.GONE);
             layoutCustomer.setVisibility(View.VISIBLE);

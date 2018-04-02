@@ -405,7 +405,7 @@ public class PemasanganActivity extends AppCompatActivity implements OnMapReadyC
 
     private void sendData() {
 
-        if(kwhStand.getText().toString().isEmpty() || kwhInisial.getText().toString().isEmpty() || kwhSegel.getText().toString().isEmpty()
+        if(kwhInisial.getText().toString().isEmpty() || kwhSegel.getText().toString().isEmpty()
                 || kwhType.getText().toString().isEmpty() || kwhMerk.getText().toString().isEmpty() || kwhNo.getText().toString().isEmpty())
         {
             Toast.makeText(this, "harap isi semua form", Toast.LENGTH_SHORT).show();
@@ -556,6 +556,7 @@ public class PemasanganActivity extends AppCompatActivity implements OnMapReadyC
         }
         else
         {
+            viewData.setVisibility(View.GONE);
             nextForm.setVisibility(View.GONE);
             layoutData.setVisibility(View.GONE);
             identitas.setVisibility(View.GONE);
